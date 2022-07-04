@@ -10,18 +10,21 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <fstream>
+#include <string>
 
 class CPU {
 	public:
 		CPU();
-		uint8_t getNbCores() const;
+		uint8_t getPercentageCpu(std::string str, std::ifstream &cpu_file) const;
 
-	private:
+	protected:
 		uint8_t nb_cores;
 };
 
-class core : public CPU {
-	uint8_t getCoreUsage () const;
+class Core : public CPU {
+	public:
+		uint8_t getCoreUsage (uint8_t CPUNumber) const;
 };
 
 #endif /* CPU_HPP_ */
