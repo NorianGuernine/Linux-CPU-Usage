@@ -30,7 +30,7 @@ uint8_t CPU::getPercentageCpu(std::string str, std::ifstream &cpu_stat) const {
 		time = time * 10 + (uint16_t(number) - 48);
 		n++;
 		number = str.at(n);
-	} while(number != 32);
+	} while(number != ASCII_SP);
 
 	total_time += time;
 	n++;
@@ -44,7 +44,26 @@ uint8_t CPU::getPercentageCpu(std::string str, std::ifstream &cpu_stat) const {
 	return static_cast<uint8_t>(cpu_utilization);
 }
 
-uint8_t Core::getCoreUsage(uint8_t CPUNumber) const {
+uint8_t CPU::getCPUUsage() const {
+
+	std::ifstream cpu_stat;
+	std::string str;
+	uint8_t cpu_utilization;
+
+	cpu_stat.open("/proc/stat");
+
+	if(cpu_stat.is_open()) {
+		getline(cpu_stat,str);
+		cpu_utilization = this->getPercentageCpu(str, cpu_stat);
+		cpu_stat.close();
+	} else {
+		std::cerr << "Unable to open /proc/stat \n";
+		return -1;
+	}
+	return cpu_utilization;
+}
+
+uint8_t Core::getCPUUsage(uint8_t CPUNumber) const {
 	/*
 	 * CPUNumber is the core number, it starts at 0
 	 */
