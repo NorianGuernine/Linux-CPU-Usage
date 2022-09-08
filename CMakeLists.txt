@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(CPU_infos)
+project(CPU_utilization)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(CPU_infos src/main.cpp)
+add_executable(CPU_utilization src/main.cpp)
 
-target_include_directories(CPU_infos PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(CPU_utilization PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
