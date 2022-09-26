@@ -31,13 +31,14 @@ bool CPU::get_cpu_times(uint32_t &idle_time, uint32_t &total_time) const {
 	std::ifstream proc_stat("/proc/stat");
 
 	for(i = -1; i < cpu_number ; i++)
-	proc_stat.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		proc_stat.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 	proc_stat.ignore(5, ' '); //TODO: stocker cette entrée comme nom des cpu au lieu d'un int8_t pout leur numéro
 
 	for (time = 0; proc_stat >> time; times.push_back(time));
 	if (times.size() < 4)
-	return false;
+		return false;
+	
 	idle_time = times[3];
 	total_time = std::accumulate(times.begin(), times.end(), 0);
 
